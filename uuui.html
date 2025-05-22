@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAZARINE - HOME&DECO</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        /* أنماط الهيدر الجديدة */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dangrek&display=swap');
+        
+        :root {
+            --primary-color: #37AFD4;
+            --secondary-color: #2C2C2C;
+            --text-color: #333;
+        }
+
+        /* الهيدر الجديد */
+        .main-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://i.ibb.co/NnrR2jqt/ead8d03b299d715376bcf7d7fe1fe33d.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 600px;
+            position: relative;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 55, 0.4);
+        }
+
+        .navbar {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .brand-logo {
+            font-family: "Dangrek", serif;
+            font-size: 2.7rem;
+            color: white;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .brand-slogan {
+            position: absolute;
+            font-size: 0.8rem;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .rent-button {
+            background: #47DFD8;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .rent-button:hover {
+            transform: translateY(-2px);
+        }
+
+        /* أنماط السلايدر الأصلية */
+        .swiper {
+            width: 100%;
+            height: 350px;
+            clip-path: ellipse(100% 100% at 50% 0%);
+            top: 0;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.3rem;
+            z-index: 500;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--primary-color) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- الهيدر الجديد -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="brand-logo">
+                TAZARINE
+                <span class="brand-slogan">HOME&DECO</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link">FR</a></li>
+                <li><button class="rent-button">RENT FROM $1</button></li>
+            </ul>
+        </nav>
+
+        <!-- السلايدر -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide slide">
+                    <img src="images/1.jpg" alt="تصميم 1">
+                    <div class="caption">🏡 ديكورات عصرية فاخرة</div>
+                </div>
+                <div class="swiper-slide slide">
+                    <img src="images/2.jpg" alt="تصميم 2">
+                    <div class="caption">🛋️ أثاث أنيق ومريح</div>
+                </div>
+                <div class="swiper-slide slide">
+                    <img src="images/3.jpg" alt="تصميم 3">
+                    <div class="caption">💡 حلول إضاءة مبتكرة</div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </header>
+
+    <!-- بقية الأقسام كما هي -->
+    <section class="features">
+        <div class="feature-card">
+            <i class="fas fa-truck"></i>
+            <h3>شحن سريع</h3>
+            <p>توصيل خلال ٢٤-٤٨ ساعة</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-shield-alt"></i>
+            <h3>ضمان ٣ سنوات</h3>
+            <p>ضمان شامل على جميع المنتجات</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-credit-card"></i>
+            <h3>دفع آمن</h3>
+            <p>أنظمة دفع إلكتروني محمية</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-section">
+            <h4>روابط سريعة</h4>
+            <a href="about.html">عن المتجر</a>
+            <a href="return-policy.html">سياسة الإرجاع</a>
+        </div>
+        <div class="footer-section">
+            <h4>اتصل بنا</h4>
+            <p><i class="fas fa-phone"></i> 0700720490</p>
+            <p><i class="fas fa-envelope"></i>tazarinedeco@gmail.com</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 2,
+                slideShadows: true,
+            },
+        });
+    </script>
+</body>
+</html>
