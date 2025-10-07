@@ -8,7 +8,7 @@ const productsData = [
         oldPrice: 499,
         images: [
             "images/file_0000000034e061f4b428852514e78443.png",
-            "images/aaat.jpg",
+            "images/sketch1753465967766.png",
             "images/extra2.jpg",
             "images/extra3.jpg"
         ],
