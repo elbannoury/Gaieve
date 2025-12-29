@@ -2,155 +2,277 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pitsiky - تطبيق الويب</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
-    <!-- PWA Required -->
-    <link rel="manifest" id="manifest" crossorigin="use-credentials">
-    <meta name="theme-color" content="#000000">
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="Pitsiky">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pitsiky">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#000000">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://via.placeholder.com/192x192/000000/FFFFFF?text=P">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://via.placeholder.com/512x512/000000/FFFFFF?text=P">
+    <link rel="apple-touch-icon" href="https://via.placeholder.com/180x180/000000/FFFFFF?text=P">
+    
+    <!-- Splash Screen for iOS -->
+    <link rel="apple-touch-startup-image" href="https://via.placeholder.com/750x1334/000000/FFFFFF?text=Pitsiky">
+    
+    <title>Pitsiky - تطبيق ويب</title>
     
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: white;
+        }
+        
+        .app-container {
             height: 100vh;
             display: flex;
             flex-direction: column;
         }
         
-        header {
-            background: #000;
-            color: white;
+        .app-header {
             padding: 20px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             text-align: center;
+            border-bottom: 1px solid #333;
         }
         
-        .container {
+        .webview-container {
             flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        
-        .install-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: #007bff;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            z-index: 1000;
-        }
-        
-        .install-btn.hidden {
-            display: none;
+            position: relative;
         }
         
         iframe {
             width: 100%;
-            height: calc(100vh - 140px);
+            height: 100%;
             border: none;
-            border-radius: 10px;
+            background: white;
+        }
+        
+        .install-prompt {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: none;
+            z-index: 10000;
+            box-shadow: 0 -2px 20px rgba(0,0,0,0.3);
+        }
+        
+        .install-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .install-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .ios-instructions {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 40px 20px;
+            z-index: 10001;
+            text-align: center;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .ios-instructions img {
+            width: 200px;
+            height: 200px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Pitsiky</h1>
-        <p>تطبيق موقع pitsiky.com</p>
-    </header>
-    
-    <div class="container">
-        <iframe src="https://pitsiky.com" 
-                allow="geolocation; microphone; camera; fullscreen"
-                allowfullscreen>
-        </iframe>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Pitsiky</h1>
+            <p>تطبيق الويب الرسمي</p>
+        </header>
+        
+        <div class="webview-container">
+            <iframe 
+                src="https://pitsiky.com" 
+                allow="camera; microphone; geolocation; fullscreen"
+                allowfullscreen
+                loading="eager">
+            </iframe>
+        </div>
     </div>
     
-    <button id="installButton" class="install-btn hidden">
-        📲 تثبيت التطبيق على الجهاز
-    </button>
+    <!-- تثبيت PWA -->
+    <div class="install-prompt" id="installPrompt">
+        <p>📱 تثبيت تطبيق Pitsiky للحصول على تجربة أفضل</p>
+        <button class="install-btn" id="installButton">تثبيت التطبيق</button>
+    </div>
+    
+    <!-- تعليمات iOS -->
+    <div class="ios-instructions" id="iosInstructions">
+        <h2>لتثبيت التطبيق على iPhone:</h2>
+        <p>1. اضغط على زر المشاركة <span style="font-size: 24px;">📤</span></p>
+        <p>2. مرر لأسفل واختر "أضف إلى الشاشة الرئيسية"</p>
+        <p>3. اضغط على "إضافة"</p>
+        <button onclick="closeIOSInstructions()" style="margin-top: 30px; padding: 10px 30px; background: #007AFF; color: white; border: none; border-radius: 10px;">
+            فهمت
+        </button>
+    </div>
 
     <script>
-        // 1. إنشاء Manifest ديناميكي
-        const manifest = {
-            "name": "Pitsiky",
-            "short_name": "Pitsiky",
-            "description": "تطبيق pitsiky.com الرسمي",
-            "start_url": window.location.href,
-            "display": "standalone",
-            "background_color": "#000000",
-            "theme_color": "#000000",
-            "icons": [
-                {
-                    "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>",
-                    "sizes": "192x192",
-                    "type": "image/svg+xml"
-                }
-            ]
-        };
-
-        // 2. إنشاء Manifest Blob
-        const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        document.getElementById('manifest').href = manifestURL;
-
-        // 3. Service Worker بسيط جدًا
+        // 1. تسجيل Service Worker
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js')
-                .catch(err => {
-                    // إذا فشل، أنشئ Service Worker ديناميكي
-                    const swContent = `self.addEventListener('install', e => e.waitUntil(caches.open('pitsiky').then(cache => cache.add('/'))));`;
-                    const swBlob = new Blob([swContent], {type: 'application/javascript'});
-                    const swURL = URL.createObjectURL(swBlob);
-                    navigator.serviceWorker.register(swURL);
-                });
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('✅ Service Worker مسجل:', registration.scope);
+                        
+                        // التحقق من PWA installation
+                        checkPWAStatus();
+                    })
+                    .catch(error => {
+                        console.log('❌ فشل تسجيل Service Worker:', error);
+                    });
+            });
         }
-
-        // 4. زر التثبيت
-        let deferredPrompt;
-        const installButton = document.getElementById('installButton');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installButton.classList.remove('hidden');
-        });
-
-        installButton.addEventListener('click', async () => {
-            if (!deferredPrompt) return;
-            
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            
-            if (outcome === 'accepted') {
-                installButton.textContent = '✅ تم التثبيت!';
-                installButton.disabled = true;
-            } else {
-                installButton.textContent = '❌ تم الإلغاء - اضغط مجددًا';
+        
+        // 2. التحقق من وضع PWA
+        function checkPWAStatus() {
+            // التحقق مما إذا كان التطبيق مثبتًا بالفعل
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('✅ يعمل في وضع PWA (تم التثبيت)');
+                document.querySelector('.install-prompt').style.display = 'none';
+                return true;
             }
             
-            deferredPrompt = null;
-        });
-
-        // 5. اكتشاف iOS وإضافة خيار "Add to Home Screen"
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        const isStandalone = window.navigator.standalone === true;
-
-        if (isIOS && !isStandalone) {
-            setTimeout(() => {
-                alert('لإضافة التطبيق للشاشة الرئيسية:\n1. اضغط زر المشاركة 📤\n2. اختر "أضف إلى الشاشة الرئيسية"\n3. اضغط "إضافة"');
-            }, 2000);
+            // التحقق من iOS
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            
+            if (isIOS && isSafari) {
+                // عرض تعليمات iOS
+                setTimeout(() => {
+                    document.getElementById('iosInstructions').style.display = 'flex';
+                }, 3000);
+            }
+            
+            return false;
         }
+        
+        // 3. تثبيت PWA
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+        const installPrompt = document.getElementById('installPrompt');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('✅ قبل تثبيت PWA');
+            // منع المتصفح من عرض التثبيت التلقائي
+            e.preventDefault();
+            // حفظ الحدث
+            deferredPrompt = e;
+            // إظهار زر التثبيت الخاص بنا
+            installPrompt.style.display = 'block';
+            
+            installButton.addEventListener('click', async () => {
+                console.log('📍 نقر زر التثبيت');
+                // إخفاء واجهة التثبيت الخاصة بنا
+                installPrompt.style.display = 'none';
+                
+                // عرض موجه التثبيت
+                deferredPrompt.prompt();
+                
+                // انتظار اختيار المستخدم
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('✅ قبل تثبيت PWA');
+                    alert('تم تثبيت التطبيق بنجاح!');
+                } else {
+                    console.log('❌ رفض المستخدم التثبيت');
+                    installPrompt.style.display = 'block';
+                }
+                
+                deferredPrompt = null;
+            });
+        });
+        
+        // 4. عند تثبيت PWA بنجاح
+        window.addEventListener('appinstalled', () => {
+            console.log('🎉 تم تثبيت PWA بنجاح!');
+            installPrompt.style.display = 'none';
+            // إعادة تحميل الصفحة لتفعيل وضع standalone
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        });
+        
+        // 5. وظيفة iOS
+        function closeIOSInstructions() {
+            document.getElementById('iosInstructions').style.display = 'none';
+        }
+        
+        // 6. إظهار زر التثبيت يدويًا إذا لم يظهر تلقائيًا
+        setTimeout(() => {
+            if (!deferredPrompt && installPrompt.style.display === 'none') {
+                installPrompt.style.display = 'block';
+            }
+        }, 5000);
+        
+        // 7. التحقق من وضع التطبيق عند التحميل
+        window.addEventListener('load', () => {
+            if (window.navigator.standalone === true) {
+                console.log('✅ يعمل في وضع standalone على iOS');
+            }
+            
+            // إخفاء شريط العناوين على iOS
+            if (window.navigator.standalone === false) {
+                setTimeout(() => {
+                    window.scrollTo(0, 1);
+                }, 100);
+            }
+        });
     </script>
 </body>
 </html>
