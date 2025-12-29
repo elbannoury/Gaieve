@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitsiky - تطبيق الويب</title>
+    
+    <!-- PWA Required -->
+    <link rel="manifest" id="manifest" crossorigin="use-credentials">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="icon.png">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: #000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .install-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            z-index: 1000;
+        }
+        
+        .install-btn.hidden {
+            display: none;
+        }
+        
+        iframe {
+            width: 100%;
+            height: calc(100vh - 140px);
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pitsiky</h1>
+        <p>تطبيق موقع pitsiky.com</p>
+    </header>
+    
+    <div class="container">
+        <iframe src="https://pitsiky.com" 
+                allow="geolocation; microphone; camera; fullscreen"
+                allowfullscreen>
+        </iframe>
+    </div>
+    
+    <button id="installButton" class="install-btn hidden">
+        📲 تثبيت التطبيق على الجهاز
+    </button>
+
+    <script>
+        // 1. إنشاء Manifest ديناميكي
+        const manifest = {
+            "name": "Pitsiky",
+            "short_name": "Pitsiky",
+            "description": "تطبيق pitsiky.com الرسمي",
+            "start_url": window.location.href,
+            "display": "standalone",
+            "background_color": "#000000",
+            "theme_color": "#000000",
+            "icons": [
+                {
+                    "src": "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📱</text></svg>",
+                    "sizes": "192x192",
+                    "type": "image/svg+xml"
+                }
+            ]
+        };
+
+        // 2. إنشاء Manifest Blob
+        const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        document.getElementById('manifest').href = manifestURL;
+
+        // 3. Service Worker بسيط جدًا
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .catch(err => {
+                    // إذا فشل، أنشئ Service Worker ديناميكي
+                    const swContent = `self.addEventListener('install', e => e.waitUntil(caches.open('pitsiky').then(cache => cache.add('/'))));`;
+                    const swBlob = new Blob([swContent], {type: 'application/javascript'});
+                    const swURL = URL.createObjectURL(swBlob);
+                    navigator.serviceWorker.register(swURL);
+                });
+        }
+
+        // 4. زر التثبيت
+        let deferredPrompt;
+        const installButton = document.getElementById('installButton');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installButton.classList.remove('hidden');
+        });
+
+        installButton.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                installButton.textContent = '✅ تم التثبيت!';
+                installButton.disabled = true;
+            } else {
+                installButton.textContent = '❌ تم الإلغاء - اضغط مجددًا';
+            }
+            
+            deferredPrompt = null;
+        });
+
+        // 5. اكتشاف iOS وإضافة خيار "Add to Home Screen"
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isStandalone = window.navigator.standalone === true;
+
+        if (isIOS && !isStandalone) {
+            setTimeout(() => {
+                alert('لإضافة التطبيق للشاشة الرئيسية:\n1. اضغط زر المشاركة 📤\n2. اختر "أضف إلى الشاشة الرئيسية"\n3. اضغط "إضافة"');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
