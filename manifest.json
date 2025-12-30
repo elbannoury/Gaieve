@@ -1,61 +1,96 @@
 {
-  "name": "PWA Wrapper",
-  "short_name": "PWA Wrapper",
-  "description": "تحويل أي موقع إلى تطبيق PWA",
-  "start_url": "./index.html",
-  "scope": "./",
+  "name": "Gaieve",
+  "short_name": "Gaieve",
+  "description": "تطبيق Gaieve كتطبيق ويب تقدمي",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#2196F3",
-  "theme_color": "#2196F3",
-  "orientation": "any",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#4f46e5",
+  "theme_color": "#4f46e5",
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "ar",
+  "dir": "rtl",
   "icons": [
     {
-      "src": "./assets/icon-72.png",
+      "src": "icons/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./assets/icon-96.png",
+      "src": "icons/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./assets/icon-128.png",
+      "src": "icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./assets/icon-144.png",
+      "src": "icons/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./assets/icon-152.png",
+      "src": "icons/icon-152x152.png",
       "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./assets/icon-192.png",
+      "src": "icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./assets/icon-384.png",
+      "src": "icons/icon-384x384.png",
       "sizes": "384x384",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "./assets/icon-512.png",
+      "src": "icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "categories": ["utilities", "productivity"],
+  "screenshots": [
+    {
+      "src": "screenshots/screenshot1.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "الصفحة الرئيسية"
+    },
+    {
+      "src": "screenshots/screenshot2.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "عرض الموقع الأصلي"
+    }
+  ],
   "shortcuts": [
     {
-      "name": "فتح التطبيق",
-      "url": "./index.html",
-      "description": "فتح تطبيق PWA Wrapper"
+      "name": "الموقع الأصلي",
+      "short_name": "الموقع",
+      "description": "فتح الموقع الأصلي في نافذة منفصلة",
+      "url": "/?page=website",
+      "icons": [{ "src": "icons/website-icon.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "الإعدادات",
+      "short_name": "إعدادات",
+      "description": "فتح صفحة الإعدادات",
+      "url": "/?page=settings",
+      "icons": [{ "src": "icons/settings-icon.png", "sizes": "96x96" }]
     }
   ]
 }
