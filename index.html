@@ -2,277 +2,276 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="description" content="تطبيق Gaieve - موقعك كتطبيق متكامل">
     
-    <!-- PWA Meta Tags -->
-    <meta name="application-name" content="Pitsiky">
+    <title>Gaieve | تطبيق ويب</title>
+    
+    <!-- رابط CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- أيقونات متعددة المقاسات -->
+    <link rel="icon" href="icons/icon-72x72.png" type="image/png">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    
+    <!-- التوجيه للهواتف الذكية -->
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Pitsiky">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="msapplication-TileColor" content="#000000">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="theme-color" content="#000000">
-    
-    <!-- Manifest -->
-    <link rel="manifest" href="/manifest.json" crossorigin="use-credentials">
-    
-    <!-- Icons -->
-    <link rel="icon" type="image/png" sizes="192x192" href="https://via.placeholder.com/192x192/000000/FFFFFF?text=P">
-    <link rel="icon" type="image/png" sizes="512x512" href="https://via.placeholder.com/512x512/000000/FFFFFF?text=P">
-    <link rel="apple-touch-icon" href="https://via.placeholder.com/180x180/000000/FFFFFF?text=P">
-    
-    <!-- Splash Screen for iOS -->
-    <link rel="apple-touch-startup-image" href="https://via.placeholder.com/750x1334/000000/FFFFFF?text=Pitsiky">
-    
-    <title>Pitsiky - تطبيق ويب</title>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        body, html {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #000;
-            color: white;
-        }
-        
-        .app-container {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .app-header {
-            padding: 20px;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            text-align: center;
-            border-bottom: 1px solid #333;
-        }
-        
-        .webview-container {
-            flex: 1;
-            position: relative;
-        }
-        
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        }
-        
-        .install-prompt {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            display: none;
-            z-index: 10000;
-            box-shadow: 0 -2px 20px rgba(0,0,0,0.3);
-        }
-        
-        .install-btn {
-            background: white;
-            color: #667eea;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        
-        .install-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        .ios-instructions {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.9);
-            color: white;
-            padding: 40px 20px;
-            z-index: 10001;
-            text-align: center;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .ios-instructions img {
-            width: 200px;
-            height: 200px;
-            margin: 20px 0;
-        }
-    </style>
 </head>
 <body>
-    <div class="app-container">
-        <header class="app-header">
-            <h1>Pitsiky</h1>
-            <p>تطبيق الويب الرسمي</p>
-        </header>
-        
-        <div class="webview-container">
-            <iframe 
-                src="https://pitsiky.com" 
-                allow="camera; microphone; geolocation; fullscreen"
-                allowfullscreen
-                loading="eager">
-            </iframe>
+    <!-- شاشة التحميل الأولي -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <div class="loader"></div>
+            <h1>Gaieve</h1>
+            <p>جاري تحميل التطبيق...</p>
         </div>
     </div>
-    
-    <!-- تثبيت PWA -->
-    <div class="install-prompt" id="installPrompt">
-        <p>📱 تثبيت تطبيق Pitsiky للحصول على تجربة أفضل</p>
-        <button class="install-btn" id="installButton">تثبيت التطبيق</button>
-    </div>
-    
-    <!-- تعليمات iOS -->
-    <div class="ios-instructions" id="iosInstructions">
-        <h2>لتثبيت التطبيق على iPhone:</h2>
-        <p>1. اضغط على زر المشاركة <span style="font-size: 24px;">📤</span></p>
-        <p>2. مرر لأسفل واختر "أضف إلى الشاشة الرئيسية"</p>
-        <p>3. اضغط على "إضافة"</p>
-        <button onclick="closeIOSInstructions()" style="margin-top: 30px; padding: 10px 30px; background: #007AFF; color: white; border: none; border-radius: 10px;">
-            فهمت
-        </button>
+
+    <!-- واجهة التطبيق الرئيسية -->
+    <div id="app" class="hidden">
+        <!-- الشريط العلوي -->
+        <header class="app-header">
+            <button class="menu-btn" id="menuBtn">☰</button>
+            <h1 class="app-title">Gaieve</h1>
+            <button class="install-btn" id="installBtn">📱 تثبيت</button>
+        </header>
+
+        <!-- القائمة الجانبية -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>القائمة</h2>
+                <button class="close-btn" id="closeBtn">✕</button>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active" data-page="home">🏠 الرئيسية</a></li>
+                <li><a href="#" data-page="website">🌐 الموقع الأصلي</a></li>
+                <li><a href="#" data-page="about">ℹ️ عن التطبيق</a></li>
+                <li><a href="#" data-page="settings">⚙️ الإعدادات</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="offlineToggle" class="offline-btn">
+                    <span>🌐 وضع اتصال</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- الصفحة الرئيسية -->
+            <section id="homePage" class="page active">
+                <div class="hero-section">
+                    <h2>مرحباً بك في تطبيق Gaieve</h2>
+                    <p>تم تحويل موقعك إلى تطبيق ويب تقدمي (PWA)</p>
+                    <div class="hero-features">
+                        <div class="feature">
+                            <span>🚀</span>
+                            <h3>سريع</h3>
+                            <p>تحميل فوري حتى بدون اتصال</p>
+                        </div>
+                        <div class="feature">
+                            <span="📱"<span>
+                            <h3>قابل للتثبيت</h3>
+                            <p>ثبته على هاتفك كتطبيق عادي</p>
+                        </div>
+                        <div class="feature">
+                            <span>🔔</span>
+                            <h3>إشعارات</h3>
+                            <p>احصل على تحديثات مباشرة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="action-btn" id="openWebsite">
+                        <span>🌐</span>
+                        <span>فتح الموقع الأصلي</span>
+                    </button>
+                    <button class="action-btn" id="refreshContent">
+                        <span>🔄</span>
+                        <span>تحديث المحتوى</span>
+                    </button>
+                    <button class="action-btn" id="shareApp">
+                        <span>📤</span>
+                        <span>مشاركة التطبيق</span>
+                    </button>
+                </div>
+
+                <div class="stats">
+                    <h3>معلومات التطبيق</h3>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <span class="stat-label">حالة الاتصال:</span>
+                            <span id="connectionStatus" class="stat-value online">متصل بالإنترنت</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">دعم PWA:</span>
+                            <span id="pwaSupport" class="stat-value">مدعوم ✓</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">الموقع:</span>
+                            <span class="stat-value">https://gaieve.vercel.app/</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- صفحة الموقع الأصلي -->
+            <section id="websitePage" class="page">
+                <div class="website-header">
+                    <h2>الموقع الأصلي</h2>
+                    <p>يتم تحميل موقع gaieve.vercel.app هنا</p>
+                </div>
+                <div class="website-container">
+                    <iframe 
+                        src="https://gaieve.vercel.app/" 
+                        frameborder="0" 
+                        id="websiteFrame"
+                        title="موقع Gaieve الأصلي"
+                        loading="lazy">
+                    </iframe>
+                    <div class="website-controls">
+                        <button id="reloadFrame" class="control-btn">🔄 إعادة تحميل</button>
+                        <button id="openInBrowser" class="control-btn">🌐 فتح في المتصفح</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- صفحة عن التطبيق -->
+            <section id="aboutPage" class="page">
+                <div class="about-container">
+                    <h2>عن تطبيق Gaieve</h2>
+                    <div class="about-card">
+                        <h3>🎯 ما هو PWA؟</h3>
+                        <p>تطبيقات الويب التقدمية (PWA) هي مواقع ويب يمكن تثبيتها على الجهاز كتطبيق عادي، مع ميزات مثل العمل دون اتصال والإشعارات.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>✨ مزايا هذا التطبيق</h3>
+                        <ul>
+                            <li>يعمل كتطبيق مستقل على الهاتف</li>
+                            <li>سرعة تحميل عالية</li>
+                            <li>يدعم العمل بدون اتصال جزئياً</li>
+                            <li>واجهة مستخدم مخصصة للجوال</li>
+                            <li>لا يحتاج تحديثات عبر المتجر</li>
+                        </ul>
+                    </div>
+                    <div class="about-card">
+                        <h3>📱 كيفية التثبيت</h3>
+                        <ol>
+                            <li>اضغط على زر "📱 تثبيت" في الأعلى</li>
+                            <li>في Chrome: اختر "إضافة إلى الشاشة الرئيسية"</li>
+                            <li>في Safari: اختر "أضف إلى الشاشة الرئيسية"</li>
+                            <li>سيظهر التطبيق على شاشتك الرئيسية</li>
+                        </ol>
+                    </div>
+                    <div class="version">الإصدار 1.0.0</div>
+                </div>
+            </section>
+
+            <!-- صفحة الإعدادات -->
+            <section id="settingsPage" class="page">
+                <div class="settings-container">
+                    <h2>الإعدادات</h2>
+                    
+                    <div class="setting-group">
+                        <h3>عام</h3>
+                        <div class="setting-item">
+                            <label for="themeSelect">السمة:</label>
+                            <select id="themeSelect">
+                                <option value="light">فاتح</option>
+                                <option value="dark">داكن</option>
+                                <option value="auto">تلقائي</option>
+                            </select>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="notificationsToggle">
+                                تمكين الإشعارات
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>المحتوى</h3>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="offlineMode" checked>
+                                تمكين الوضع دون اتصال
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label for="cacheSize">حجم التخزين المؤقت:</label>
+                            <select id="cacheSize">
+                                <option value="50">50 ميجابايت</option>
+                                <option value="100" selected>100 ميجابايت</option>
+                                <option value="200">200 ميجابايت</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>حول</h3>
+                        <div class="setting-item">
+                            <button id="clearCache" class="danger-btn">🗑️ مسح الذاكرة المؤقتة</button>
+                        </div>
+                        <div class="setting-item">
+                            <button id="checkUpdate" class="secondary-btn">🔍 التحقق من التحديثات</button>
+                        </div>
+                    </div>
+
+                    <div class="app-info">
+                        <p>تم تصميم هذا التطبيق باستخدام تقنية PWA</p>
+                        <p>© 2024 Gaieve - جميع الحقوق محفوظة</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- شريط التصفح السفلي -->
+        <footer class="bottom-nav">
+            <button class="nav-btn active" data-page="home">
+                <span>🏠</span>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-btn" data-page="website">
+                <span>🌐</span>
+                <span>الموقع</span>
+            </button>
+            <button class="nav-btn" data-page="about">
+                <span>ℹ️</span>
+                <span>عن</span>
+            </button>
+            <button class="nav-btn" data-page="settings">
+                <span>⚙️</span>
+                <span>إعدادات</span>
+            </button>
+        </footer>
     </div>
 
+    <!-- رسائل التنبيه -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Service Worker Registration -->
     <script>
-        // 1. تسجيل Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('service-worker.js')
                     .then(registration => {
-                        console.log('✅ Service Worker مسجل:', registration.scope);
-                        
-                        // التحقق من PWA installation
-                        checkPWAStatus();
+                        console.log('ServiceWorker registered:', registration);
                     })
                     .catch(error => {
-                        console.log('❌ فشل تسجيل Service Worker:', error);
+                        console.log('ServiceWorker registration failed:', error);
                     });
             });
         }
-        
-        // 2. التحقق من وضع PWA
-        function checkPWAStatus() {
-            // التحقق مما إذا كان التطبيق مثبتًا بالفعل
-            if (window.matchMedia('(display-mode: standalone)').matches) {
-                console.log('✅ يعمل في وضع PWA (تم التثبيت)');
-                document.querySelector('.install-prompt').style.display = 'none';
-                return true;
-            }
-            
-            // التحقق من iOS
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-            
-            if (isIOS && isSafari) {
-                // عرض تعليمات iOS
-                setTimeout(() => {
-                    document.getElementById('iosInstructions').style.display = 'flex';
-                }, 3000);
-            }
-            
-            return false;
-        }
-        
-        // 3. تثبيت PWA
-        let deferredPrompt;
-        const installButton = document.getElementById('installButton');
-        const installPrompt = document.getElementById('installPrompt');
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            console.log('✅ قبل تثبيت PWA');
-            // منع المتصفح من عرض التثبيت التلقائي
-            e.preventDefault();
-            // حفظ الحدث
-            deferredPrompt = e;
-            // إظهار زر التثبيت الخاص بنا
-            installPrompt.style.display = 'block';
-            
-            installButton.addEventListener('click', async () => {
-                console.log('📍 نقر زر التثبيت');
-                // إخفاء واجهة التثبيت الخاصة بنا
-                installPrompt.style.display = 'none';
-                
-                // عرض موجه التثبيت
-                deferredPrompt.prompt();
-                
-                // انتظار اختيار المستخدم
-                const { outcome } = await deferredPrompt.userChoice;
-                
-                if (outcome === 'accepted') {
-                    console.log('✅ قبل تثبيت PWA');
-                    alert('تم تثبيت التطبيق بنجاح!');
-                } else {
-                    console.log('❌ رفض المستخدم التثبيت');
-                    installPrompt.style.display = 'block';
-                }
-                
-                deferredPrompt = null;
-            });
-        });
-        
-        // 4. عند تثبيت PWA بنجاح
-        window.addEventListener('appinstalled', () => {
-            console.log('🎉 تم تثبيت PWA بنجاح!');
-            installPrompt.style.display = 'none';
-            // إعادة تحميل الصفحة لتفعيل وضع standalone
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        });
-        
-        // 5. وظيفة iOS
-        function closeIOSInstructions() {
-            document.getElementById('iosInstructions').style.display = 'none';
-        }
-        
-        // 6. إظهار زر التثبيت يدويًا إذا لم يظهر تلقائيًا
-        setTimeout(() => {
-            if (!deferredPrompt && installPrompt.style.display === 'none') {
-                installPrompt.style.display = 'block';
-            }
-        }, 5000);
-        
-        // 7. التحقق من وضع التطبيق عند التحميل
-        window.addEventListener('load', () => {
-            if (window.navigator.standalone === true) {
-                console.log('✅ يعمل في وضع standalone على iOS');
-            }
-            
-            // إخفاء شريط العناوين على iOS
-            if (window.navigator.standalone === false) {
-                setTimeout(() => {
-                    window.scrollTo(0, 1);
-                }, 100);
-            }
-        });
     </script>
+    
+    <!-- JavaScript الرئيسي -->
+    <script src="app.js"></script>
 </body>
 </html>
